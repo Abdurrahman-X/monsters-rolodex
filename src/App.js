@@ -2,6 +2,7 @@ import "./App.css";
 import { Component } from "react";
 import { CardList } from "./components/card-list/card-list.component";
 import { SearchBox } from "./components/search-box/search-box.component";
+import { Title } from "./components/Title/title.component"
 
 // function App() {
 //   return (
@@ -40,6 +41,11 @@ class App extends Component {
       .then((response) => response.json())
       .then((data) => this.setState({ monsters: data }));
   }
+
+  handleChange = (e) => {
+    this.setState({searchField: e.target.value});
+  }
+  
   render() {
     const { monsters, searchField } = this.state;
     const filteredMonsters = monsters.filter(monster => 
@@ -48,9 +54,10 @@ class App extends Component {
     console.log(filteredMonsters);
     return (
       <div className="App">
+       <Title name = "Monsters Rolodex"/>
         <SearchBox 
           placeholder = "search monsters"
-          handleChange = { e => this.setState({searchField: e.target.value})} />
+          handleChange = { this.handleChange } />
         <CardList monsters={filteredMonsters} />
       </div>
     );
